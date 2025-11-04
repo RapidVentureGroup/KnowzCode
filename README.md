@@ -1,38 +1,60 @@
-# Noderr
+# KnowzCode
 
-Your AI already knows how to code. Noderr teaches it how to engineer.
+Your AI already knows how to code. KnowzCode teaches it how to engineer.
 
 ---
 
 ## Documentation
 
-- **[Getting Started](./docs/noderr_getting_started.md)** - Complete user guide and first steps
-- **[Understanding Noderr](./docs/understanding-noderr.md)** - Deep dive into concepts and architecture
-- **[Prompts Guide](./docs/noderr_prompts_guide.md)** - Command reference for all workflows
-- **[Visual Guide](./docs/noderr_guide.md)** - Visual roadmap of files and structure
+- **[Getting Started](./docs/knowzcode_getting_started.md)** - Complete user guide and first steps
+- **[Understanding KnowzCode](./docs/understanding-knowzcode.md)** - Deep dive into concepts and architecture
+- **[Prompts Guide](./docs/knowzcode_prompts_guide.md)** - Command reference for all workflows
+- **[Visual Guide](./docs/knowzcode_guide.md)** - Visual roadmap of files and structure
 - **[Installation](./INSTALL.md)** - Quick setup instructions
 
-## What is Noderr?
+## What is KnowzCode?
 
-Noderr gives AI what every senior developer has: **permanent memory** and **system understanding**.
+KnowzCode gives AI what every senior developer has: **permanent memory** and **system understanding**.
 
 ### Quick Start
 
 1. **Prepare Your Vision** - Create blueprint, project overview, and architecture documents
 2. **Build Initial Prototype** - AI creates your first version based on the plans
-3. **Install Noderr** - Extract framework and reconcile with what was built
-4. **Develop Systematically** - Use the Noderr loop for all future development
+3. **Install KnowzCode** - Extract framework to your project
+4. **Run Automated Setup** - Execute `/kc-install` to configure automation
+5. **Develop Systematically** - Use `/kc` to start your first WorkGroup
 
-*Noderr documents what you ACTUALLY built, not just what you planned.*
+*KnowzCode documents what you ACTUALLY built, not just what you planned.*
 
 ### Prerequisites
 - Any AI assistant that can read/write files (ChatGPT, Claude, Cursor, etc.)
 - Basic familiarity with AI-assisted coding
 - A project idea (new or existing)
 
+### Installation
+
+**Automated (Recommended):**
+```bash
+/kc-install
+```
+
+This single command:
+- ✅ Copies automation system to `.claude/` directory
+- ✅ Configures hooks for quality enforcement
+- ✅ Validates installation succeeded
+- ✅ Provides next steps
+
+**What gets installed:**
+- 6 slash commands (`/kc`, `/kc-step`, `/kc-audit`, etc.)
+- 17+ automation skills
+- 15+ AI subagents
+- 5 quality enforcement hooks
+
+See [Installation Guide](./INSTALL.md) for manual setup or troubleshooting.
+
 ---
 
-## The Noderr Difference
+## The KnowzCode Difference
 
 ### 1. Building Blocks with Identity (NodeIDs)
 
@@ -68,84 +90,84 @@ graph TD
     end
 
     %% --- Entry Flow ---
-    APP_Start((User Opens App)):::./noderr/specs/APP_Start.md --> AUTH_Check{User Logged In?}:::./noderr/specs/AUTH_Check.md
+    APP_Start((User Opens App)):::./knowzcode/specs/APP_Start.md --> AUTH_Check{User Logged In?}:::./knowzcode/specs/AUTH_Check.md
     
     %% --- Authentication Subgraph ---
     subgraph "Authentication System"
-        AUTH_Check -->|No| UI_LoginPage[/Login Page/]:::./noderr/specs/UI_LoginPage.md
-        UI_LoginPage --> UI_LoginForm[/Login Form/]:::./noderr/specs/UI_LoginForm.md
-        UI_LoginForm -->|Submit| API_Login{{POST /api/auth/login}}:::./noderr/specs/API_Login.md
+        AUTH_Check -->|No| UI_LoginPage[/Login Page/]:::./knowzcode/specs/UI_LoginPage.md
+        UI_LoginPage --> UI_LoginForm[/Login Form/]:::./knowzcode/specs/UI_LoginForm.md
+        UI_LoginForm -->|Submit| API_Login{{POST /api/auth/login}}:::./knowzcode/specs/API_Login.md
         
-        API_Login --> SVC_AuthValidator[[Auth Validator Service]]:::./noderr/specs/SVC_AuthValidator.md
-        SVC_AuthValidator --> DB_Users[(Users Database)]:::./noderr/specs/DB_Users.md
+        API_Login --> SVC_AuthValidator[[Auth Validator Service]]:::./knowzcode/specs/SVC_AuthValidator.md
+        SVC_AuthValidator --> DB_Users[(Users Database)]:::./knowzcode/specs/DB_Users.md
         
-        DB_Users --> LoginResult{Valid Credentials?}:::./noderr/specs/LoginResult.md
-        LoginResult -->|No| UI_LoginError[/Show Login Error/]:::./noderr/specs/UI_LoginError.md
-        LoginResult -->|Yes| SVC_TokenGenerator[[Token Generator]]:::./noderr/specs/SVC_TokenGenerator.md
+        DB_Users --> LoginResult{Valid Credentials?}:::./knowzcode/specs/LoginResult.md
+        LoginResult -->|No| UI_LoginError[/Show Login Error/]:::./knowzcode/specs/UI_LoginError.md
+        LoginResult -->|Yes| SVC_TokenGenerator[[Token Generator]]:::./knowzcode/specs/SVC_TokenGenerator.md
         
         UI_LoginError --> UI_LoginForm
         SVC_TokenGenerator --> API_Login
-        API_Login -->|Success| STATE_UserSession[["Store User Session"]]:::./noderr/specs/STATE_UserSession.md
+        API_Login -->|Success| STATE_UserSession[["Store User Session"]]:::./knowzcode/specs/STATE_UserSession.md
     end
     
     %% --- Main Application ---
-    AUTH_Check -->|Yes| UI_Dashboard[/Dashboard/]:::./noderr/specs/UI_Dashboard.md
+    AUTH_Check -->|Yes| UI_Dashboard[/Dashboard/]:::./knowzcode/specs/UI_Dashboard.md
     STATE_UserSession --> UI_Dashboard
     
     subgraph "E-Commerce Flow"
-        UI_Dashboard --> UI_ProductGrid[/Product Grid/]:::./noderr/specs/UI_ProductGrid.md
-        UI_ProductGrid --> UI_ProductCard[/Product Card/]:::./noderr/specs/UI_ProductCard.md
+        UI_Dashboard --> UI_ProductGrid[/Product Grid/]:::./knowzcode/specs/UI_ProductGrid.md
+        UI_ProductGrid --> UI_ProductCard[/Product Card/]:::./knowzcode/specs/UI_ProductCard.md
         
-        UI_ProductCard -->|View Details| UI_ProductModal[/Product Details Modal/]:::./noderr/specs/UI_ProductModal.md
-        UI_ProductCard -->|Quick Add| STATE_CartManager[["Cart State Manager"]]:::./noderr/specs/STATE_CartManager.md
+        UI_ProductCard -->|View Details| UI_ProductModal[/Product Details Modal/]:::./knowzcode/specs/UI_ProductModal.md
+        UI_ProductCard -->|Quick Add| STATE_CartManager[["Cart State Manager"]]:::./knowzcode/specs/STATE_CartManager.md
         
         UI_ProductModal -->|Add to Cart| STATE_CartManager
-        STATE_CartManager -->|Update| UI_CartIcon[/Cart Icon Badge/]:::./noderr/specs/UI_CartIcon.md
+        STATE_CartManager -->|Update| UI_CartIcon[/Cart Icon Badge/]:::./knowzcode/specs/UI_CartIcon.md
         
-        UI_CartIcon -->|Click| UI_CartDrawer[/Shopping Cart Drawer/]:::./noderr/specs/UI_CartDrawer.md
-        UI_CartDrawer -->|Checkout| UI_CheckoutFlow[/Checkout Page/]:::./noderr/specs/UI_CheckoutFlow.md
+        UI_CartIcon -->|Click| UI_CartDrawer[/Shopping Cart Drawer/]:::./knowzcode/specs/UI_CartDrawer.md
+        UI_CartDrawer -->|Checkout| UI_CheckoutFlow[/Checkout Page/]:::./knowzcode/specs/UI_CheckoutFlow.md
     end
     
     subgraph "Checkout Processing"
-        UI_CheckoutFlow --> API_CreateOrder{{POST /api/orders}}:::./noderr/specs/API_CreateOrder.md
-        API_CreateOrder --> SVC_OrderProcessor[[Order Processor]]:::./noderr/specs/SVC_OrderProcessor.md
+        UI_CheckoutFlow --> API_CreateOrder{{POST /api/orders}}:::./knowzcode/specs/API_CreateOrder.md
+        API_CreateOrder --> SVC_OrderProcessor[[Order Processor]]:::./knowzcode/specs/SVC_OrderProcessor.md
         
-        SVC_OrderProcessor --> SVC_InventoryCheck[[Inventory Service]]:::./noderr/specs/SVC_InventoryCheck.md
-        SVC_InventoryCheck --> DB_Inventory[(Inventory DB)]:::./noderr/specs/DB_Inventory.md
+        SVC_OrderProcessor --> SVC_InventoryCheck[[Inventory Service]]:::./knowzcode/specs/SVC_InventoryCheck.md
+        SVC_InventoryCheck --> DB_Inventory[(Inventory DB)]:::./knowzcode/specs/DB_Inventory.md
         
-        DB_Inventory --> StockCheck{Items In Stock?}:::./noderr/specs/StockCheck.md
-        StockCheck -->|No| UI_StockError[/Out of Stock Error/]:::./noderr/specs/UI_StockError.md
-        StockCheck -->|Yes| SVC_PaymentGateway[[Payment Service]]:::./noderr/specs/SVC_PaymentGateway.md
+        DB_Inventory --> StockCheck{Items In Stock?}:::./knowzcode/specs/StockCheck.md
+        StockCheck -->|No| UI_StockError[/Out of Stock Error/]:::./knowzcode/specs/UI_StockError.md
+        StockCheck -->|Yes| SVC_PaymentGateway[[Payment Service]]:::./knowzcode/specs/SVC_PaymentGateway.md
         
-        SVC_PaymentGateway --> EXT_Stripe{{Stripe API}}:::./noderr/specs/EXT_Stripe.md
-        EXT_Stripe --> PaymentResult{Payment Success?}:::./noderr/specs/PaymentResult.md
+        SVC_PaymentGateway --> EXT_Stripe{{Stripe API}}:::./knowzcode/specs/EXT_Stripe.md
+        EXT_Stripe --> PaymentResult{Payment Success?}:::./knowzcode/specs/PaymentResult.md
         
-        PaymentResult -->|No| UI_PaymentError[/Payment Failed/]:::./noderr/specs/UI_PaymentError.md
-        PaymentResult -->|Yes| DB_Orders[(Orders Database)]:::./noderr/specs/DB_Orders.md
+        PaymentResult -->|No| UI_PaymentError[/Payment Failed/]:::./knowzcode/specs/UI_PaymentError.md
+        PaymentResult -->|Yes| DB_Orders[(Orders Database)]:::./knowzcode/specs/DB_Orders.md
         
-        DB_Orders --> SVC_EmailService[[Email Service]]:::./noderr/specs/SVC_EmailService.md
-        SVC_EmailService --> EXT_SendGrid{{SendGrid API}}:::./noderr/specs/EXT_SendGrid.md
+        DB_Orders --> SVC_EmailService[[Email Service]]:::./knowzcode/specs/SVC_EmailService.md
+        SVC_EmailService --> EXT_SendGrid{{SendGrid API}}:::./knowzcode/specs/EXT_SendGrid.md
         
-        DB_Orders --> UI_OrderSuccess[/Order Confirmation/]:::./noderr/specs/UI_OrderSuccess.md
+        DB_Orders --> UI_OrderSuccess[/Order Confirmation/]:::./knowzcode/specs/UI_OrderSuccess.md
     end
     
     %% --- Error Handling Flow ---
     subgraph "Error Management"
-        API_Login -->|Error| UI_ErrorToast[/Error Toast Notification/]:::./noderr/specs/UI_ErrorToast.md
+        API_Login -->|Error| UI_ErrorToast[/Error Toast Notification/]:::./knowzcode/specs/UI_ErrorToast.md
         API_CreateOrder -->|Error| UI_ErrorToast
         EXT_Stripe -->|Error| UI_ErrorToast
-        EXT_SendGrid -->|Error| SVC_ErrorLogger[[Error Logger]]:::./noderr/specs/SVC_ErrorLogger.md
-        SVC_ErrorLogger --> DB_ErrorLogs[(Error Logs)]:::./noderr/specs/DB_ErrorLogs.md
+        EXT_SendGrid -->|Error| SVC_ErrorLogger[[Error Logger]]:::./knowzcode/specs/SVC_ErrorLogger.md
+        SVC_ErrorLogger --> DB_ErrorLogs[(Error Logs)]:::./knowzcode/specs/DB_ErrorLogs.md
     end
     
     %% --- Search Feature ---
     subgraph "Product Search"
-        UI_Dashboard --> UI_SearchBar[/Search Bar/]:::./noderr/specs/UI_SearchBar.md
-        UI_SearchBar -->|Type| SVC_SearchDebounce[[Debounce Service]]:::./noderr/specs/SVC_SearchDebounce.md
-        SVC_SearchDebounce -->|300ms| API_Search{{GET /api/search}}:::./noderr/specs/API_Search.md
-        API_Search --> SVC_SearchEngine[[Search Engine]]:::./noderr/specs/SVC_SearchEngine.md
-        SVC_SearchEngine --> DB_Products[(Products DB)]:::./noderr/specs/DB_Products.md
-        DB_Products --> UI_SearchResults[/Search Results Dropdown/]:::./noderr/specs/UI_SearchResults.md
+        UI_Dashboard --> UI_SearchBar[/Search Bar/]:::./knowzcode/specs/UI_SearchBar.md
+        UI_SearchBar -->|Type| SVC_SearchDebounce[[Debounce Service]]:::./knowzcode/specs/SVC_SearchDebounce.md
+        SVC_SearchDebounce -->|300ms| API_Search{{GET /api/search}}:::./knowzcode/specs/API_Search.md
+        API_Search --> SVC_SearchEngine[[Search Engine]]:::./knowzcode/specs/SVC_SearchEngine.md
+        SVC_SearchEngine --> DB_Products[(Products DB)]:::./knowzcode/specs/DB_Products.md
+        DB_Products --> UI_SearchResults[/Search Results Dropdown/]:::./knowzcode/specs/UI_SearchResults.md
         UI_SearchResults -->|Select| UI_ProductModal
     end
     
@@ -169,7 +191,7 @@ The AI uses this visual memory to understand that changing `API_AuthCheck` will 
 
 ### 3. Blueprints for Every Building Block (Specifications)
 
-Each NodeID has its own detailed blueprint in the `noderr/specs/` folder. These contain:
+Each NodeID has its own detailed blueprint in the `knowzcode/specs/` folder. These contain:
 - Purpose and responsibilities
 - Dependencies and interfaces
 - Core logic and behavior
@@ -230,9 +252,9 @@ The tracker dashboard shows exactly what's done, what's in progress, and what's 
 
 ---
 
-## How is Noderr Different?
+## How is KnowzCode Different?
 
-| Traditional AI Coding | Noderr |
+| Traditional AI Coding | KnowzCode |
 |----------------------|-------------|
 | "Add login feature" → AI writes some login code somewhere | "Add login feature" → AI identifies all affected NodeIDs, shows system impact, builds everything together |
 | "Update the auth system" → "What auth system? I don't see one" | "Update API_AuthCheck" → AI knows exactly what you mean, sees all connections |
@@ -247,12 +269,12 @@ The tracker dashboard shows exactly what's done, what's in progress, and what's 
 
 ---
 
-## The Noderr Loop
+## The KnowzCode Loop
 
 Every feature follows this systematic, verification-driven process:
 
 **Step 1A: Impact Analysis**
-→ Use prompt: `noderr/prompts/NDv1.9__[LOOP_1A]__Propose_Change_Set.md`
+→ Use prompt: `knowzcode/prompts/KCv2.0__[LOOP_1A]__Propose_Change_Set.md`
 ```
 You: "Add password reset"
 AI: "This requires changing:
@@ -262,25 +284,25 @@ AI: "This requires changing:
 ```
 
 **Step 1B: Draft Specs**
-→ Use prompt: `noderr/prompts/NDv1.9__[LOOP_1B]__Draft_Specs.md`
+→ Use prompt: `knowzcode/prompts/KCv2.0__[LOOP_1B]__Draft_Specs.md`
 - AI marks NodeIDs as Work-In-Progress (WIP).
 - Creates detailed blueprints for every affected NodeID.
 - You review the specifications.
 - **Note:** For large changes (≥10 NodeIDs), a **Spec Verification Checkpoint** is run here to ensure quality before implementation.
 
 **Step 2A: Implement Change Set**
-→ Use prompt: `noderr/prompts/NDv1.9__[LOOP_2A]__Implement_Change_Set.md`
+→ Use prompt: `knowzcode/prompts/KCv2.0__[LOOP_2A]__Implement_Change_Set.md`
 - AI builds ALL NodeIDs in the Change Set together.
 - Runs tests and initial verification.
 
 **Step 2B: Verify Implementation Completeness**
-→ Use prompt: `noderr/prompts/NDv1.9__[LOOP_2B]__Verify_Implementation.md`
+→ Use prompt: `knowzcode/prompts/KCv2.0__[LOOP_2B]__Verify_Implementation.md`
 - A READ-ONLY audit verifies the implementation against the specs.
 - Reports a true completion percentage (e.g., "85% of requirements met").
 - This prevents "done" claims when work is incomplete.
 
 **Step 3: Finalize & Commit**
-→ Use prompt: `noderr/prompts/NDv1.9__[LOOP_3]__Finalize_And_Commit.md`
+→ Use prompt: `knowzcode/prompts/KCv2.0__[LOOP_3]__Finalize_And_Commit.md`
 - Updates all specs to match what was actually built.
 - Logs decisions and discoveries.
 - Creates a clean git commit.
@@ -289,18 +311,18 @@ AI: "This requires changing:
 
 ## Installation & Setup
 
-### The Noderr Approach
+### The KnowzCode Approach
 
-Unlike traditional tools, Noderr is installed AFTER you build your initial prototype. This ensures it documents what actually exists, not just what was planned.
+Unlike traditional tools, KnowzCode is installed AFTER you build your initial prototype. This ensures it documents what actually exists, not just what was planned.
 
 ### Quick Install
 1. **Prepare your vision** (blueprint, project overview, architecture)
 2. **Build initial prototype** with AI based on those plans
-3. **Download & add Noderr** - [Get noderr-starter.zip](https://github.com/kaithoughtarchitect/noderr/releases/download/v1.9.1/noderr.starter.zip)
-4. **Run Install prompt** - `noderr/prompts/ND__Install_And_Reconcile.md`
-5. **Run System Audit** - `noderr/prompts/ND__Post_Installation_Audit.md`
+3. **Download & add KnowzCode** - [Get knowzcode-starter.zip](https://github.com/kaithoughtarchitect/knowzcode/releases/download/v2.0.0/knowzcode.starter.zip)
+4. **Run Install prompt** - `knowzcode/prompts/ND__Install_And_Reconcile.md`
+5. **Run System Audit** - `knowzcode/prompts/ND__Post_Installation_Audit.md`
 
-See [Getting Started](./docs/noderr_getting_started.md) for detailed instructions.
+See [Getting Started](./docs/knowzcode_getting_started.md) for detailed instructions.
 
 ---
 
@@ -308,15 +330,16 @@ See [Getting Started](./docs/noderr_getting_started.md) for detailed instruction
 
 ```
 your-project/
-└── noderr/                    # Everything inside!
-    ├── noderr_project.md
-    ├── noderr_architecture.md
-    ├── noderr_tracker.md
-    ├── noderr_log.md
-    ├── noderr_loop.md
+└── knowzcode/                    # Everything inside!
+    ├── knowzcode_project.md
+    ├── knowzcode_architecture.md
+    ├── knowzcode_tracker.md
+    ├── knowzcode_log.md
+    ├── knowzcode_loop.md
     ├── environment_context.md
     ├── specs/
     ├── planning/
+    ├── workgroups/
     └── prompts/
 ```
 
@@ -324,7 +347,7 @@ your-project/
 
 ## Real Example
 
-**Without Noderr:**
+**Without KnowzCode:**
 ```javascript
 // Monday: "Add user profile"
 function UserProfile() { ... }
@@ -336,10 +359,10 @@ function Settings() { ... }  // New component, doesn't connect
 // AI: "I don't see how these relate..."
 ```
 
-**With Noderr:**
+**With KnowzCode:**
 ```javascript
 // Monday: "Add user profile"
-// You: Use prompt "NDv1.9__[LOOP_1A]__Propose_Change_Set.md"
+// You: Use prompt "KCv2.0__[LOOP_1A]__Propose_Change_Set.md"
 // AI: "Creating UI_UserProfile (NodeID), updating UI_Navigation to include 
 //      profile link, adding API_GetProfile endpoint. All connected in architecture."
 
@@ -357,7 +380,7 @@ function Settings() { ... }  // New component, doesn't connect
 ## Critical Concepts
 
 ### The Environment Context
-The AI cannot function without `noderr/environment_context.md` being configured. This file teaches the AI:
+The AI cannot function without `knowzcode/environment_context.md` being configured. This file teaches the AI:
 - What commands to use on YOUR system (npm vs yarn, python vs python3)
 - How to run tests in YOUR setup
 - Where YOUR database lives
@@ -366,12 +389,12 @@ The AI cannot function without `noderr/environment_context.md` being configured.
 ### The Prompts System
 You don't just chat with the AI. You use specific prompt files to trigger each phase:
 ```
-noderr/prompts/NDv1.9__Start_Work_Session.md         → Begin work
-noderr/prompts/NDv1.9__[LOOP_1A]__Propose_Change_Set.md → Start a feature
-noderr/prompts/NDv1.9__[LOOP_1B]__Draft_Specs.md    → Review specs
-noderr/prompts/NDv1.9__[LOOP_2A]__Implement_Change_Set.md → Build it
-noderr/prompts/NDv1.9__[LOOP_2B]__Verify_Implementation.md → Audit it
-noderr/prompts/NDv1.9__[LOOP_3]__Finalize_And_Commit.md → Finish up
+knowzcode/prompts/KCv2.0__Start_Work_Session.md         → Begin work
+knowzcode/prompts/KCv2.0__[LOOP_1A]__Propose_Change_Set.md → Start a feature
+knowzcode/prompts/KCv2.0__[LOOP_1B]__Draft_Specs.md    → Review specs
+knowzcode/prompts/KCv2.0__[LOOP_2A]__Implement_Change_Set.md → Build it
+knowzcode/prompts/KCv2.0__[LOOP_2B]__Verify_Implementation.md → Audit it
+knowzcode/prompts/KCv2.0__[LOOP_3]__Finalize_And_Commit.md → Finish up
 ```
 
 ### ARC Verification
@@ -383,9 +406,15 @@ noderr/prompts/NDv1.9__[LOOP_3]__Finalize_And_Commit.md → Finish up
 - Documentation matches reality
 
 ### 🔍 Quality Gates - Trust But Verify
-Noderr doesn't just trust the AI to get it right. It enforces two key quality gates:
+KnowzCode doesn't just trust the AI to get it right. It enforces two key quality gates:
 1.  **Specification Verification (Pre-Implementation):** For large changes (10+ NodeIDs), an automated check ensures all specifications are complete and logical *before* a single line of code is written. This prevents building on a flawed foundation.
 2.  **Implementation Audit (Post-Implementation):** After the AI reports "done", a mandatory, read-only audit (Loop 2B) compares the code against the specs. It provides a true completion percentage, catching gaps and preventing incomplete features from being marked as finished.
+
+---
+
+## Acknowledgments
+
+KnowzCode is built upon the excellent foundation of the [Noderr project](https://github.com/kaithoughtarchitect/noderr) by [@kaithoughtarchitect](https://github.com/kaithoughtarchitect). We're grateful for their pioneering work in systematic AI-driven development and are happy to continue iterating on their great work.
 
 ---
 
@@ -397,9 +426,9 @@ MIT License - Use freely in your projects
 
 ## The Bottom Line
 
-Noderr transforms AI from an eager intern who writes random code into a disciplined engineer who understands your system, follows your standards, and builds with purpose.
+KnowzCode transforms AI from an eager intern who writes random code into a disciplined engineer who understands your system, follows your standards, and builds with purpose.
 
-Welcome to systematic AI development. Welcome to Noderr.
+Welcome to systematic AI development. Welcome to KnowzCode.
 
 ---
 
