@@ -18,11 +18,11 @@ KnowzCode gives AI what every senior developer has: **permanent memory** and **s
 
 ### Quick Start
 
-1. **Prepare Your Vision** - Create blueprint, project overview, and architecture documents
-2. **Build Initial Prototype** - AI creates your first version based on the plans
-3. **Install KnowzCode** - Extract framework to your project
-4. **Run Automated Setup** - Execute `/kc-install` to configure automation
-5. **Develop Systematically** - Use `/kc` to start your first WorkGroup
+1. **Clone the Template** - `git clone https://github.com/RapidVentureGroup/KnowzCode.git`
+2. **Install to Your Project** - From template folder: `/kc-install /path/to/your/project`
+3. **Switch to Your Project** - `cd /path/to/your/project`
+4. **Start Your First Workflow** - `/kc "Your feature description"`
+5. **Let KnowzCode Guide You** - Follow the structured loop through spec → code → audit → commit
 
 *KnowzCode documents what you ACTUALLY built, not just what you planned.*
 
@@ -33,22 +33,44 @@ KnowzCode gives AI what every senior developer has: **permanent memory** and **s
 
 ### Installation
 
-**Automated (Recommended):**
+**This repository is a TEMPLATE.** Clone it once, then use it to install/update KnowzCode into your actual projects.
+
+#### Step 1: Clone the Template
+
 ```bash
-/kc-install
+git clone https://github.com/RapidVentureGroup/KnowzCode.git
+cd KnowzCode
 ```
 
-This single command:
-- ✅ Copies automation system to `.claude/` directory
-- ✅ Configures hooks for quality enforcement
-- ✅ Validates installation succeeded
-- ✅ Provides next steps
+#### Step 2: Install into Your Project
+
+From this template directory, run Claude Code and use the installation command:
+
+```bash
+# Install into a new project
+/kc-install /path/to/your/project
+
+# Or update an existing KnowzCode installation
+/kc-update /path/to/your/project
+```
+
+**The installation command will:**
+- ✅ Copy automation system to `.claude/` in your project
+- ✅ Set up knowzcode/ directory structure
+- ✅ Configure hooks for quality enforcement
+- ✅ Validate installation succeeded
+- ✅ Preserve existing project data (when updating)
 
 **What gets installed:**
 - 6 slash commands (`/kc`, `/kc-step`, `/kc-audit`, etc.)
 - 17+ automation skills
 - 15+ AI subagents
 - 5 quality enforcement hooks
+
+**Important:**
+- This repository is the **source template**
+- Your actual projects are the **installation targets**
+- Run `/kc-update <target-path>` from this template folder to update projects with latest improvements
 
 See [Installation Guide](./INSTALL.md) for manual setup or troubleshooting.
 
