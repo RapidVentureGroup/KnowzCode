@@ -1,385 +1,199 @@
 ---
-description: "Intelligently merge KnowzCode framework updates from this template into a target project"
-argument-hint: "<target_path> [options]"
+description: "Update KnowzCode framework from this template into a target project"
+argument-hint: "<target_path>"
 ---
 
 # KnowzCode Framework Update
 
-Merge improvements from this KnowzCode template into your target project while preserving customizations and project data.
+Update framework files (agents, commands, prompts) from this template into your target project.
 
 **Target Path**: $1
-**Options**: $2
 
-## When to Use
+## What Gets Updated
 
-- **Use `/kc-install`** for first-time installation of KnowzCode
-- **Use `/kc-update`** to merge template improvements into existing KnowzCode installation
+- ✅ **Agents**: Sub-agent definitions
+- ✅ **Commands**: Slash commands
+- ✅ **Prompts**: Reusable templates
+- ✅ **Core Files**: Framework documentation
 
-This command requires KnowzCode already be installed in the target project.
+## What Gets Preserved
 
-## Safety First
-
-This command will:
-- ✅ Create backups before any changes
-- ✅ Preserve all project data (tracker, logs, workgroups)
-- ✅ Protect customizations
-- ✅ Provide rollback capability
-- ✅ Validate updates before applying
-- ⚠️ Pause for your approval before making changes
+- ✅ **Project Data**: tracker, logs, workgroups, specs
+- ✅ **Customizations**: Custom agents, commands, or prompts
+- ✅ **Environment**: environment_context.md, knowzcode_project.md
 
 ## Execution
 
-Use the update-coordinator sub-agent to orchestrate the update process
+Use the update-coordinator sub-agent to orchestrate the update process.
 
 Context:
 - Source Path: $(pwd) (current directory - this template repository)
 - Target Path: $1
-- Mode: Intelligent framework update with data preservation
-- Options: $2
+- Mode: Framework file updates only
 
 Instructions for update-coordinator:
 
-### Phase 1: Validation and Backup
+### Step 1: Validate Paths
 
-1. **Validate arguments**:
-   ```bash
-   # Check if target path provided
-   if [ -z "$1" ]; then
-     echo "ERROR: Target path required"
-     echo "Usage: /kc-update <target_path>"
-     exit 1
-   fi
+```bash
+TARGET_PATH="$1"
+SOURCE_PATH="$(pwd)"
 
-   TARGET_PATH="$1"
-   SOURCE_PATH="$(pwd)"  # Current directory where command is run
-   ```
+# Check arguments
+if [ -z "$TARGET_PATH" ]; then
+  echo "ERROR: Target path required"
+  echo "Usage: /kc-update <target_path>"
+  exit 1
+fi
 
-2. **Validate source (template) structure**:
-   - Verify we're in the template repo: `[ -d "claude/agents" ]` and `[ -d "knowzcode" ]`
-   - Confirm template has valid structure:
-     - claude/ directory with agents
-     - knowzcode/ directory with core files
-   - If not valid template, ERROR and exit
+# Validate source template
+if [ ! -d "$SOURCE_PATH/claude/agents" ] || [ ! -d "$SOURCE_PATH/knowzcode" ]; then
+  echo "ERROR: Not in template repository"
+  exit 1
+fi
 
-3. **Validate target project**:
-   - Check that target path exists: `[ -d "$TARGET_PATH" ]`
-   - Confirm KnowzCode is installed: `[ -d "$TARGET_PATH/.claude" ]`
-   - If not installed, suggest using `/kc-install` instead
-   - Check for active WorkGroups:
-     - Read knowzcode/workgroups/ directory
-     - Look for in-progress WorkGroups
-     - If active WorkGroups exist, WARN user and confirm proceed
-
-4. **Create backups**:
-   ```bash
-   timestamp=$(date -u +"%Y%m%d_%H%M%S")
-   cd "$TARGET_PATH"
-
-   mkdir -p .claude.backup.$timestamp
-   mkdir -p knowzcode.backup.$timestamp
-   cp -r .claude/* .claude.backup.$timestamp/
-   cp -r knowzcode/* knowzcode.backup.$timestamp/
-   ```
-
-5. **Create backup manifest**:
-   ```bash
-   cat > ".knowzcode.backup.$timestamp.json" <<EOF
-   {
-     "timestamp": "$timestamp",
-     "operation": "kc-update",
-     "source": "$SOURCE_PATH",
-     "target": "$TARGET_PATH",
-     "backup_claude": ".claude.backup.$timestamp",
-     "backup_knowzcode": "knowzcode.backup.$timestamp",
-     "rollback_command": "/kc-rollback $timestamp"
-   }
-   EOF
-   ```
-
-### Phase 2: Change Analysis
-
-1. **Identify all changes**:
-   ```bash
-   SOURCE_PATH="$(pwd)"  # Current directory where command is run
-   TARGET_PATH="$1"
-
-   # Compare claude/ (source) to .claude/ (target)
-   # Compare knowzcode/ (source) to knowzcode/ (target)
-   ```
-   - Use Glob to list all files in source: `$SOURCE_PATH/claude/**/*` and `$SOURCE_PATH/knowzcode/**/*`
-   - Use Glob to list all files in target: `$TARGET_PATH/.claude/**/*` and `$TARGET_PATH/knowzcode/**/*`
-   - Use Bash diff to compare files
-   - Categorize into:
-     - NEW: Files in source not in target
-     - MODIFIED: Files in both but different
-     - DELETED: Files in target not in source (not from template)
-     - CUSTOM: Files in target that appear customized
-
-2. **Detect customizations**:
-   - Compare against known default content (if available)
-   - Look for:
-     - Project-specific agent modifications
-     - Custom commands
-     - Added sections in documentation
-     - Modified templates
-
-3. **Identify data files** (must preserve):
-   - knowzcode/knowzcode_tracker.md
-   - knowzcode/knowzcode_log.md
-   - knowzcode/knowzcode_project.md
-   - knowzcode/environment_context.md
-   - knowzcode/workgroups/*.md
-   - knowzcode/specs/*.md (project-specific specs)
-
-4. **Flag potential conflicts**:
-   - Framework files with custom modifications
-   - Structural changes to data files
-   - Deleted files that may be in use
-
-### Phase 3: Present Update Plan
-
-PAUSE and present detailed plan:
-
-```markdown
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-KNOWZCODE FRAMEWORK UPDATE PLAN
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-**Source**: $SOURCE_PATH (template)
-**Target**: $TARGET_PATH
-
-## Summary
-
-**New Components**:
-- Agents: {count} new agents to add
-- Commands: {count} new commands to add
-- Prompts: {count} new prompts to add
-- Documentation: {count} new docs to add
-
-**Updates Available**:
-- Agents: {count} agents with improvements
-- Commands: {count} commands with improvements
-- Core docs: {count} docs with improvements
-- Prompts: {count} prompts with improvements
-
-**Customizations Detected**:
-- Custom agents: {count} will be preserved
-- Custom commands: {count} will be preserved
-- Modified docs: {count} will create .new files for review
-
-**Data Files (Protected)**:
-✅ knowzcode_tracker.md - {n} entries will be preserved
-✅ knowzcode_log.md - {n} events will be preserved
-✅ knowzcode_project.md - content will be preserved
-✅ workgroups/ - {n} files will be preserved
-✅ specs/ - {n} specs will be preserved
-
-**Potential Conflicts**: {count}
-{List conflicts if any}
-
-## Backups Created
-
-📦 .claude.backup.{timestamp}/
-📦 knowzcode.backup.{timestamp}/
-
-## Actions to Take
-
-1. Add {n} new files
-2. Update {n} framework files
-3. Preserve {n} custom files
-4. Create {n} .new files for manual review
-5. Skip {n} unchanged files
-
-## Safety Guarantees
-
-✅ All project data will be preserved
-✅ All customizations will be protected
-✅ Backups available for rollback
-✅ No active WorkGroups will be affected
-✅ Validation performed after update
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-**Proceed with update?** [Yes/No/Review Details]
+# Validate target has KnowzCode installed
+if [ ! -d "$TARGET_PATH/.claude" ] || [ ! -d "$TARGET_PATH/knowzcode" ]; then
+  echo "ERROR: KnowzCode not installed in target. Use /kc-install first."
+  exit 1
+fi
 ```
 
-### Phase 4: Execute Update (After Approval)
+### Step 2: Identify Changes
 
-**Systematic application**:
+Compare template to target and identify what needs updating:
 
-1. **Add new files**:
-   ```bash
-   SOURCE_PATH="$(pwd)"  # Current directory where command is run
-   TARGET_PATH="$1"
+```bash
+cd "$SOURCE_PATH"
 
-   for new_file in {new_files}:
-     # Map claude/ → .claude/
-     source_file="$SOURCE_PATH/$new_file"
-     target_file="$TARGET_PATH/${new_file/claude\//\.claude\/}"
+# Find differences in agents
+echo "Checking agents..."
+for agent in claude/agents/*.md; do
+  agent_name=$(basename "$agent")
+  target_agent="$TARGET_PATH/.claude/agents/$agent_name"
 
-     mkdir -p "$(dirname "$target_file")"
-     cp "$source_file" "$target_file"
-     echo "ADDED: $new_file" >> "$TARGET_PATH/knowzcode/update.log"
-   ```
+  if [ ! -f "$target_agent" ]; then
+    echo "NEW: $agent_name"
+  elif ! diff -q "$agent" "$target_agent" >/dev/null 2>&1; then
+    echo "MODIFIED: $agent_name"
+  fi
+done
 
-2. **Update framework files** (no customizations):
-   ```bash
-   for updated_file in {updated_files}:
-     source_file="$SOURCE_PATH/$updated_file"
-     target_file="$TARGET_PATH/${updated_file/claude\//\.claude\/}"
+# Find differences in commands
+echo "Checking commands..."
+for cmd in claude/commands/*.md; do
+  cmd_name=$(basename "$cmd")
+  target_cmd="$TARGET_PATH/.claude/commands/$cmd_name"
 
-     cp "$source_file" "$target_file"
-     echo "UPDATED: $updated_file" >> "$TARGET_PATH/knowzcode/update.log"
-   ```
+  if [ ! -f "$target_cmd" ]; then
+    echo "NEW: $cmd_name"
+  elif ! diff -q "$cmd" "$target_cmd" >/dev/null 2>&1; then
+    echo "MODIFIED: $cmd_name"
+  fi
+done
 
-3. **Handle custom files**:
-   ```bash
-   for custom_file in {custom_files}:
-     source_file="$SOURCE_PATH/$custom_file"
-     target_file="$TARGET_PATH/${custom_file/claude\//\.claude\/}"
+# Find differences in prompts
+echo "Checking prompts..."
+for prompt in knowzcode/prompts/*.md; do
+  prompt_name=$(basename "$prompt")
+  target_prompt="$TARGET_PATH/knowzcode/prompts/$prompt_name"
 
-     cp "$source_file" "$target_file.new"
-     echo "PRESERVED: $custom_file (created .new for review)" >> "$TARGET_PATH/knowzcode/update.log"
-   ```
+  if [ ! -f "$target_prompt" ]; then
+    echo "NEW: $prompt_name"
+  elif ! diff -q "$prompt" "$target_prompt" >/dev/null 2>&1; then
+    echo "MODIFIED: $prompt_name"
+  fi
+done
 
-4. **Preserve data files** (NEVER overwrite):
-   ```bash
-   # DO NOT copy these, only validate structure if needed
-   - knowzcode/knowzcode_tracker.md
-   - knowzcode/knowzcode_log.md
-   - knowzcode/knowzcode_project.md
-   - knowzcode/environment_context.md
-   - knowzcode/workgroups/*.md
-   ```
+# Check core framework files (knowzcode_loop.md, etc.)
+for core in knowzcode/knowzcode_loop.md knowzcode/README.md; do
+  if [ -f "$core" ]; then
+    core_name=$(basename "$core")
+    target_core="$TARGET_PATH/$core"
 
-5. **Log every action** to `knowzcode/update_manifest.md`
-
-### Phase 5: Validation and Reporting
-
-1. **Run validation checks**:
-   - Verify all expected files present
-   - Check agents have YAML frontmatter:
-     ```bash
-     for agent in .claude/agents/*.md:
-       head -n 3 $agent | grep -q "^---$" || echo "WARNING: $agent missing frontmatter"
-     ```
-   - Validate commands are readable
-   - Ensure data files intact
-
-2. **Test basic functionality**:
-   - Check if kc-orchestrator can be invoked
-   - Verify commands are registered
-   - Test file operations work
-
-3. **Generate update manifest**:
-   Create/append to `knowzcode/update_manifest.md` with complete change log
-
-4. **Create final report**:
-
-```markdown
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ KNOWZCODE UPDATE COMPLETED SUCCESSFULLY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-## Changes Applied
-
-**Added**: {n} new files
-**Updated**: {n} framework files
-**Preserved**: {n} custom files
-**Created for Review**: {n} .new files
-
-## Data Integrity
-
-✅ Tracker: {n} entries preserved
-✅ Log: {n} events preserved
-✅ Project metadata: Preserved
-✅ WorkGroups: {n} files preserved
-✅ Specs: {n} files preserved
-
-## Files Requiring Review
-
-{List any .new files created}
-
-To review: `diff {original} {original}.new`
-
-## Backup Location
-
-Rollback available at:
-- .claude.backup.{timestamp}/
-- knowzcode.backup.{timestamp}/
-
-To rollback: `/kc-rollback {timestamp}`
-
-## Next Steps
-
-1. ✓ Review any .new files and merge manually if desired
-2. ✓ Test orchestration: `/kc-step 1A` (dry run)
-3. ✓ Read update manifest: `knowzcode/update_manifest.md`
-4. ✓ Remove .new files after review: `rm .claude/**/*.new`
-
-## Validation Results
-
-✅ All components present
-✅ Agents have valid format
-✅ Commands are functional
-✅ Data files intact
-✅ No broken references
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-**KnowzCode framework successfully updated!**
+    if [ ! -f "$target_core" ]; then
+      echo "NEW: $core_name"
+    elif ! diff -q "$core" "$target_core" >/dev/null 2>&1; then
+      echo "MODIFIED: $core_name"
+    fi
+  fi
+done
 ```
 
-### Error Handling
+### Step 3: Apply Updates
 
-If ANY step fails:
+Update only framework files, preserve all project data:
 
-1. **Immediately stop**
-2. **Log error**:
-   ```markdown
-   ERROR at Phase {n}, Step {m}:
-   {error_message}
+```bash
+cd "$SOURCE_PATH"
 
-   State: Partial update applied
-   Action: Initiating automatic rollback
-   ```
+# Update agents
+for agent in claude/agents/*.md; do
+  agent_name=$(basename "$agent")
+  target_agent="$TARGET_PATH/.claude/agents/$agent_name"
 
-3. **Attempt rollback**:
-   ```bash
-   rm -rf .claude/
-   rm -rf knowzcode/
-   cp -r .claude.backup.{timestamp}/* .claude/
-   cp -r knowzcode.backup.{timestamp}/* knowzcode/
-   ```
+  if [ ! -f "$target_agent" ] || ! diff -q "$agent" "$target_agent" >/dev/null 2>&1; then
+    cp "$agent" "$target_agent"
+    echo "✅ Updated: agents/$agent_name"
+  fi
+done
 
-4. **Verify rollback**:
-   - Check all files restored
-   - Test basic functionality
-   - Report rollback status
+# Update commands
+for cmd in claude/commands/*.md; do
+  cmd_name=$(basename "$cmd")
+  target_cmd="$TARGET_PATH/.claude/commands/$cmd_name"
 
-5. **Report to user**:
-   ```markdown
-   ⚠️ UPDATE FAILED - SYSTEM ROLLED BACK
+  if [ ! -f "$target_cmd" ] || ! diff -q "$cmd" "$target_cmd" >/dev/null 2>&1; then
+    cp "$cmd" "$target_cmd"
+    echo "✅ Updated: commands/$cmd_name"
+  fi
+done
 
-   Error: {error_message}
-   Phase: {phase_name}
+# Update prompts
+for prompt in knowzcode/prompts/*.md; do
+  prompt_name=$(basename "$prompt")
+  target_prompt="$TARGET_PATH/knowzcode/prompts/$prompt_name"
 
-   Status: ✅ Rollback successful, original state restored
+  if [ ! -f "$target_prompt" ] || ! diff -q "$prompt" "$target_prompt" >/dev/null 2>&1; then
+    mkdir -p "$TARGET_PATH/knowzcode/prompts"
+    cp "$prompt" "$target_prompt"
+    echo "✅ Updated: prompts/$prompt_name"
+  fi
+done
 
-   The system is in its original state before update attempt.
-   Backups preserved at: .claude.backup.{timestamp}/
+# Update core files (SKIP data files like tracker, log, project, environment_context)
+for core in knowzcode/knowzcode_loop.md knowzcode/README.md; do
+  if [ -f "$core" ]; then
+    core_name=$(basename "$core")
+    target_core="$TARGET_PATH/$core"
 
-   Recommended: Review error and try again with different options
-   ```
+    if [ ! -f "$target_core" ] || ! diff -q "$core" "$target_core" >/dev/null 2>&1; then
+      cp "$core" "$target_core"
+      echo "✅ Updated: $core_name"
+    fi
+  fi
+done
 
-## Critical Rules
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "✅ Framework files updated"
+echo ""
+echo "Preserved (not touched):"
+echo "  - knowzcode/knowzcode_tracker.md"
+echo "  - knowzcode/knowzcode_log.md"
+echo "  - knowzcode/knowzcode_project.md"
+echo "  - knowzcode/environment_context.md"
+echo "  - knowzcode/workgroups/"
+echo "  - knowzcode/specs/"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+```
 
-1. **NEVER overwrite without backup**
-2. **ALWAYS preserve project data files**
-3. **PAUSE for approval** before applying changes
-4. **ROLLBACK on any error** automatically
-5. **LOG every action** for audit trail
-6. **VALIDATE after completion**
-7. **PROVIDE clear next steps**
+## Files Never Modified
 
-The update-coordinator will ensure your project data stays safe while bringing in framework improvements.
+These files are ALWAYS preserved:
+- `knowzcode/knowzcode_tracker.md` - WorkGroup tracking
+- `knowzcode/knowzcode_log.md` - Event history
+- `knowzcode/knowzcode_project.md` - Project metadata
+- `knowzcode/environment_context.md` - Environment config
+- `knowzcode/workgroups/*.md` - All WorkGroup files
+- `knowzcode/specs/*.md` - All specification files
