@@ -1,42 +1,38 @@
 ---
-description: "Launch a KCv2.0 audit routine"
-argument-hint: "[audit_type] [workgroup_id]"
+description: "Run KnowzCode audit workflows (spec, architecture, security, integration)"
+argument-hint: "[audit_type]"
 ---
 
-Launch a comprehensive audit routine using KnowzCode v2.0 specialized auditors.
+# KnowzCode Audit Execution
 
-## Workflow Steps
+Run specialized audit workflows.
 
-1. **Validate Environment** - Ensure prerequisites are met
-2. **Load Core Context** - Load core KnowzCode documentation
-3. **Resolve Audit Type** - Map natural language to audit category
-4. **Run Appropriate Auditor** - Delegate to specialized audit agent
-5. **Render Audit Prompt** - Execute audit-specific prompt
-6. **Update Caches** - Refresh internal state
+**Audit Type**: $ARGUMENTS
 
 ## Audit Types
 
-- **spec** - Specification quality and ARC compliance audit (uses arc-auditor)
-- **implementation** - Code implementation audit (uses arc-auditor)
-- **architecture** - Architectural review (uses architecture-reviewer)
-- **security** - Security assessment (uses security-officer)
-- **integration** - Holistic integration audit (uses holistic-auditor)
+- **spec** → Specification quality audit
+- **architecture** → Architecture health review
+- **security** → Security vulnerability audit
+- **integration** → Holistic integration audit
 
-## Arguments
+## Execution
 
-- `audit_type` (optional): Audit category - accepts values above or natural language
-- `workgroup_id` (optional): WorkGroupID or NodeID targeted by the audit
+Use the kc-orchestrator sub-agent to coordinate the audit workflow
 
-## Example Usage
+Context:
+- Audit Type: $ARGUMENTS
+- Mode: Quality assurance and validation
 
-```
-/kc-audit spec WG_FEAT_20250103_001
-/kc-audit architecture
-/kc-audit "security review" WG_BUGFIX_20250103_002
-/kc-audit
-```
+Instructions for orchestrator:
+1. Determine the audit type from arguments
+2. Load relevant KnowzCode context files
+3. Delegate to the appropriate audit sub-agent:
+   - spec → spec-quality-auditor
+   - architecture → architecture-reviewer
+   - security → security-officer
+   - integration → holistic-auditor
+4. Present audit findings to the user
+5. Update knowzcode_log.md with audit results
 
-## Context Files
-
-- knowzcode/automation_manifest.md
-- Audit-specific prompt files (resolved dynamically)
+The orchestrator will coordinate with the audit-specific sub-agent.

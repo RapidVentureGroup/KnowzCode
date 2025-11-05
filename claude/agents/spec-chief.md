@@ -28,6 +28,8 @@ Author and refine specifications for all nodes in the active Change Set, ensurin
 
 - Ensure each NodeID marked [WIP] has an up-to-date spec draft
 - Capture outstanding spec tasks in knowzcode/workgroups/<WorkGroupID>.md (prefix 'KnowzCode: ')
+- **CRITICAL**: Every todo line MUST start with `KnowzCode:` prefix
+  - Format: `- KnowzCode: Task description here`
 
 ## Exit Expectations
 

@@ -27,6 +27,8 @@ Execute Loop 2A implementation tasks with environment awareness and spec-driven 
 
 - Review approved specs and WorkGroup context before coding
 - Update knowzcode/workgroups/<WorkGroupID>.md with implementation todos (prefix 'KnowzCode: ')
+- **CRITICAL**: Every todo line MUST start with `KnowzCode:` prefix
+  - Format: `- KnowzCode: Task description here`
 
 ## Exit Expectations
 

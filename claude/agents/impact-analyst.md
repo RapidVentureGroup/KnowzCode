@@ -29,6 +29,8 @@ Perform Loop 1A impact analysis and propose the Change Set for the WorkGroup.
 
 - Gather the PrimaryGoal and existing WorkGroup state
 - Use workgroup-todo-manager to append discovery tasks (prefix 'KnowzCode: ')
+- **CRITICAL**: Every todo line MUST start with `KnowzCode:` prefix
+  - Format: `- KnowzCode: Task description here`
 - Run `inspect` command to analyze codebase
 
 ## Exit Expectations
