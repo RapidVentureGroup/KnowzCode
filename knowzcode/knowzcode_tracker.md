@@ -1,6 +1,6 @@
-# KnowzCode - Status Map
+# ◆ KnowzCode - Status Map
 
-**Purpose:** This document tracks the development status of all implementable components (NodeIDs) defined in `knowzcode_architecture.md`. It guides task selection, groups related work via `WorkGroupID`, and provides a quick overview of project progress. It is updated by the AI Agent as per `knowzcode_loop.md`.
+**Purpose:** This document tracks the development status of all implementable components (NodeIDs) defined in `knowzcode_architecture.md`. It guides task selection, groups related work via `WorkGroupID`, and provides a quick overview of project progress. It is updated by the KnowzCode AI Agent as per `knowzcode_loop.md`.
 
 **Note:** All paths are relative to the project root where the knowzcode files reside. The specs/ directory is within your project directory alongside other knowzcode files.
 
@@ -15,11 +15,11 @@
 | | | | | | | | | |
 
 ---
-### Legend for Status:
+### ◆ KnowzCode Status Legend:
 
 *   ⚪️ **`[TODO]`**: Task is defined and ready to be picked up if dependencies are met. This status also applies to `REFACTOR_` tasks created from technical debt.
 *   📝 **`[NEEDS_SPEC]`**: Node has been identified in the architecture but requires a detailed specification to be drafted.
-*   🟡 **`[WIP]`**: Work In Progress. The AI Agent is currently working on this node as part of the specified `WorkGroupID`.
+*   ◆ **`[WIP]`**: ◆ **KnowzCode Working** - Work In Progress. The KnowzCode AI Agent is currently working on this node as part of the specified `WorkGroupID`.
 *   🟢 **`[VERIFIED]`**: The primary completion state. The node has been implemented, all ARC Verification Criteria are met, the spec is finalized to "as-built", and all outcomes are logged.
 *   ❗ **`[ISSUE]`**: A significant issue or blocker has been identified, preventing progress. Details should be in `knowzcode_log.md` or linked in the "Notes / Issues" column.
 

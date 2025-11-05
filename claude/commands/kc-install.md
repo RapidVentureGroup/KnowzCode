@@ -1,9 +1,9 @@
 ---
-description: "Install KnowzCode framework into a target project from this template repository"
+description: "◆ KnowzCode: Install KnowzCode framework into a target project from this template repository"
 argument-hint: "<target_path>"
 ---
 
-# KnowzCode Installation
+# ◆ KnowzCode Installation
 
 Install the KnowzCode framework into a target project directory.
 

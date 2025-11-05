@@ -1,9 +1,9 @@
 ---
-description: "Run KnowzCode audit workflows (spec, architecture, security, integration)"
+description: "◆ KnowzCode: Run KnowzCode audit workflows (spec, architecture, security, integration)"
 argument-hint: "[audit_type]"
 ---
 
-# KnowzCode Audit Execution
+# ◆ KnowzCode Audit Execution
 
 Run specialized audit workflows.
 

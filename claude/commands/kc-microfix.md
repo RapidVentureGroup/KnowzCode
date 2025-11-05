@@ -1,7 +1,9 @@
 ---
-description: "Execute the KCv2.0 micro-fix workflow"
+description: "◆ KnowzCode: Execute the KCv2.0 micro-fix workflow"
 argument-hint: "<target> <summary>"
 ---
+
+# ◆ KnowzCode Micro-Fix
 
 Execute a targeted micro-fix within the KnowzCode v2.0 framework.
 

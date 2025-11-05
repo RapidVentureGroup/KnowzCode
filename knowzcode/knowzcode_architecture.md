@@ -1,4 +1,4 @@
-# KnowzCode - Architectural Flowchart
+# ◆ KnowzCode - Architectural Flowchart
 
 **Purpose:** This document contains the Mermaid flowchart defining the architecture, components (NodeIDs), and their primary interactions for this project. This visual map is the source of truth for all implementable components tracked in `knowzcode_tracker.md`.
 

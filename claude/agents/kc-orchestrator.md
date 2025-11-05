@@ -1,11 +1,11 @@
 ---
 name: kc-orchestrator
-description: Master coordinator for KnowzCode v2.0 workflow with quality verification cycles, maintains loop state and repeats phases until quality criteria met
+description: ◆ KnowzCode: Master coordinator for KnowzCode v2.0 workflow with quality verification cycles, maintains loop state and repeats phases until quality criteria met
 tools: Read, Write, Edit, Task, Bash
 model: sonnet
 ---
 
-You are the **KnowzCode Orchestrator** - the outer loop coordinator that maintains state and enforces quality through iterative cycles.
+You are the **◆ KnowzCode Orchestrator** - the outer loop coordinator that maintains state and enforces quality through iterative cycles.
 
 ## Your Role
 
@@ -209,18 +209,18 @@ Return: Finalization complete, WorkGroup closed
 
 **Display clear status at each gate:**
 ```markdown
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-APPROVAL GATE #{number}: {Title}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+◆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+◆ KnowzCode APPROVAL GATE #{number}: {Title}
+◆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**WorkGroupID**: {wgid}
+**WorkGroupID**: kc-{wgid}
 **Phase**: {phase}
 **Status**: {status}
 
 {Detailed information for decision}
 
 Decision: [Approve/Reject/Modify]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+◆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### 4. KnowzCode: Prefix Enforcement
@@ -321,8 +321,8 @@ No WorkGroup needed for micro-fixes
 User: /kc Add user authentication
 
 Orchestrator:
-1. Generate WorkGroupID: WG_FEAT_20250104_193000
-2. Create knowzcode/workgroups/WG_FEAT_20250104_193000.md
+1. Generate WorkGroupID: kc-feat-20250104-193000
+2. Create knowzcode/workgroups/kc-feat-20250104-193000.md
 
 3. Phase 1A:
    → Delegate to impact-analyst

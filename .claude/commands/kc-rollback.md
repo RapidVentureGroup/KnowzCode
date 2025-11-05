@@ -1,9 +1,9 @@
 ---
-description: "Rollback to a previous KnowzCode installation from backup"
+description: "◆ KnowzCode: Rollback to a previous KnowzCode installation from backup"
 argument-hint: "[timestamp]"
 ---
 
-# KnowzCode Rollback
+# ◆ KnowzCode Rollback
 
 Restore KnowzCode framework to a previous state from backup.
 

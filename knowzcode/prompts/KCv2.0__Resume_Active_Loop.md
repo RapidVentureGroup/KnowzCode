@@ -1,6 +1,6 @@
-# KnowzCode v2.0: Resume Active Loop
+# ◆ KnowzCode v2.0: Resume Active Loop
 
-> **Automation Path:** Call `/kc-step phase=2A workgroup_id=<ID>` (or relevant phase) after this diagnostic to synchronize the appropriate subagent with the reconstructed state.
+> **Automation Path:** Call `/kc-step phase=2A workgroup_id=<ID>` (or relevant phase) after this diagnostic to synchronize the appropriate KnowzCode subagent with the reconstructed state.
 
 ## Mission: Reconstruct Active Work Context & Continue
 
@@ -20,7 +20,7 @@ Work is already in progress. Your mission is to understand KnowzCode, reconstruc
 
 **Specifications**: Each NodeID has a blueprint at `specs/[NodeID].md` containing Purpose, Dependencies, Interfaces, Core Logic, and ARC Verification Criteria. Specs evolve: Draft → Implemented → As-Built.
 
-**Change Sets**: All NodeIDs that must change together for a feature. Tracked by WorkGroupID (e.g., `feat-20250115-093045`). All nodes in a Change Set share the same WorkGroupID and [WIP] status.
+**Change Sets**: All NodeIDs that must change together for a feature. Tracked by WorkGroupID (e.g., `kc-feat-20250115-093045`). All nodes in a Change Set share the same WorkGroupID and ◆ [WIP] status.
 
 **The KnowzCode Loop**:
 1. **[LOOP_1A]** Propose Change Set - Identify all affected NodeIDs

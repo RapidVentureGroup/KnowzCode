@@ -1,7 +1,9 @@
 ---
-description: "Run KCv2.0 planning prompts"
+description: "◆ KnowzCode: Run KCv2.0 planning prompts"
 argument-hint: "[plan_type]"
 ---
+
+# ◆ KnowzCode Planning
 
 Execute strategic planning workflows using KnowzCode v2.0 planning infrastructure.
 

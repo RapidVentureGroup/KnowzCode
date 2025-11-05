@@ -1,8 +1,8 @@
-# Project Overview: [Agent: Infer a Project Name from UserProjectIdea]
+# ◆ KnowzCode Project Overview: [Agent: Infer a Project Name from UserProjectIdea]
 
 ---
 
-**Purpose of this Document:** This `knowzcode_project.md` is a core artifact of the KnowzCode v2.0 system. It provides a comprehensive high-level summary of the project, including its goals, scope, technology stack, architecture, coding standards, and quality priorities. The AI Agent will reference this document extensively for context and guidance throughout the development lifecycle, as detailed in `knowzcode_loop.md`.
+**Purpose of this Document:** This `knowzcode_project.md` is a core artifact of the KnowzCode v2.0 system. It provides a comprehensive high-level summary of the project, including its goals, scope, technology stack, architecture, coding standards, and quality priorities. The KnowzCode AI Agent will reference this document extensively for context and guidance throughout the development lifecycle, as detailed in `knowzcode_loop.md`.
 
 ---
 

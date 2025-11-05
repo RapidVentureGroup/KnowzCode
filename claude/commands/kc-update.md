@@ -1,9 +1,9 @@
 ---
-description: "Update KnowzCode framework from this template into a target project"
+description: "◆ KnowzCode: Update KnowzCode framework from this template into a target project"
 argument-hint: "<target_path>"
 ---
 
-# KnowzCode Framework Update
+# ◆ KnowzCode Framework Update
 
 Update framework files (agents, commands, prompts) from this template into your target project.
 

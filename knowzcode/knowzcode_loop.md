@@ -1,7 +1,7 @@
-# KnowzCode - The KnowzCode Loop & Operational Protocol
+# ◆ KnowzCode - The KnowzCode Loop & Operational Protocol
 
 **Target Audience:** AI Developer/Agent
-**Purpose:** This document is your primary operational guide for the KnowzCode system. The Orchestrator will direct you to execute tasks based on a `PrimaryGoal`. You will then define and process a "Change Set" of all affected nodes by following the main operational loop detailed herein.
+**Purpose:** This document is your primary operational guide for the KnowzCode system. The KnowzCode Orchestrator will direct you to execute tasks based on a `PrimaryGoal`. You will then define and process a "Change Set" of all affected nodes by following the main operational loop detailed herein.
 
 ## 1. KnowzCode Core Principles Summary
 
@@ -40,10 +40,10 @@ The Orchestrator will initiate this loop by providing you with a `PrimaryGoal`.
     - If a dependency lacks a spec, it must be marked `[NEEDS_SPEC]` and included in the Change Set.
     - Record discovery tasks and open questions in `knowzcode/workgroups/<WorkGroupID>.md` (prefix each bullet with `KnowzCode:`).
 1.3. **Propose & Confirm Change Set**: Present the proposed Change Set to the Orchestrator for review and confirmation. **PAUSE and await Orchestrator approval.**
-1.4. **Grouped Status Update**: Upon confirmation, generate a unique `WorkGroupID` and update `knowzcode_tracker.md` for all nodes in the Change Set to `[WIP]` with the new `WorkGroupID`.
-    - **WorkGroupID Format**: `[type]-[YYYYMMDD]-[HHMMSS]`
+1.4. **Grouped Status Update**: Upon confirmation, generate a unique `WorkGroupID` and update `knowzcode_tracker.md` for all nodes in the Change Set to `◆ [WIP]` with the new `WorkGroupID`.
+    - **WorkGroupID Format**: `kc-[type]-[YYYYMMDD]-[HHMMSS]`
     - **Valid types**: `feat`, `fix`, `refactor`, `issue`
-    - **Example**: `feat-20250107-143022`
+    - **Example**: `kc-feat-20250107-143022`
 
 **Step 2: Context Assembly**
 2.1. Thoroughly review all relevant project artifacts for **all nodes in the active `WorkGroupID`**.
